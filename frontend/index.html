@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Intelligent News Ranking System using LLM Agents. Evaluates real-time news articles across Relevance, Credibility, Sentiment, and Quality dimensions.">
+  <title>Intelligent News Ranking System Using LLM Agents</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-logo-icon" aria-hidden="true">📰</div>
+        <div class="brand-info">
+          <h1>
+            NewsRank AI
+            <span class="badge-tag">LLM Agents</span>
+          </h1>
+          <p>Explainable Multi-Agent News Evaluation & Ranking</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div id="api-status-badge" class="status-pill" title="Backend API Connectivity Status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span id="api-status-text">Checking API...</span>
+        </div>
+        <button id="btn-open-config" class="btn-icon" title="Configure Backend API URL" aria-label="Configure API Endpoint">
+          ⚙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero & Search Section -->
+    <section class="hero-section" aria-labelledby="hero-title">
+      <h2 id="hero-title" class="hero-title">Intelligent News Ranking System</h2>
+      <p class="hero-subtitle">
+        Autonomous multi-agent evaluation synthesizing <strong>Relevance (40%)</strong>, 
+        <strong>Credibility (25%)</strong>, <strong>Freshness (20%)</strong>, and <strong>Quality (15%)</strong>.
+      </p>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <form id="search-form" class="search-form" role="search" novalidate>
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            name="q"
+            placeholder="Search news topics (e.g., Artificial Intelligence, Clean Energy)..."
+            aria-label="Search query"
+            required
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <div class="search-controls">
+            <div class="limit-select-wrapper" title="Maximum articles to evaluate and rank">
+              <label for="limit-select">Limit:</label>
+              <select id="limit-select" class="limit-select" aria-label="Max articles limit">
+                <option value="1" selected>1</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+              </select>
+            </div>
+            <button type="submit" id="btn-search" class="btn-search" aria-label="Execute News Search & Ranking">
+              <span id="search-btn-icon">⚡</span>
+              <span id="search-btn-text">Rank News</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Example Query Pills -->
+        <nav class="examples-bar" aria-label="Example search queries">
+          <span class="examples-label">Suggested topics:</span>
+          <div id="example-pills-container" class="examples-pills-list"></div>
+        </nav>
+      </div>
+
+      <!-- Agent Pipeline Overview Infographic -->
+      <div class="pipeline-overview" aria-label="Multi-agent evaluation workflow">
+        <div class="pipeline-steps">
+          <div class="pipeline-step">
+            <div class="step-icon-circle">📡</div>
+            <div class="step-content">
+              <span class="step-title">1. News Ingestion</span>
+              <span class="step-weight">NewsAPI & Deduplication</span>
+            </div>
+          </div>
+          <span class="pipeline-arrow" aria-hidden="true">➔</span>
+          <div class="pipeline-step">
+            <div class="step-icon-circle">🎯</div>
+            <div class="step-content">
+              <span class="step-title">2. Relevance Agent</span>
+              <span class="step-weight">Weight: 40%</span>
+            </div>
+          </div>
+          <span class="pipeline-arrow" aria-hidden="true">➔</span>
+          <div class="pipeline-step">
+            <div class="step-icon-circle">🛡️</div>
+            <div class="step-content">
+              <span class="step-title">3. Credibility Agent</span>
+              <span class="step-weight">Weight: 25%</span>
+            </div>
+          </div>
+          <span class="pipeline-arrow" aria-hidden="true">➔</span>
+          <div class="pipeline-step">
+            <div class="step-icon-circle">⚖️</div>
+            <div class="step-content">
+              <span class="step-title">4. Ranking Synthesis</span>
+              <span class="step-weight">Composite Score</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback & State Feedback Area -->
+    <div id="state-container" class="state-container" aria-live="polite">
+      <!-- Initial Welcome State -->
+      <section id="initial-state" class="empty-initial-card">
+        <div class="empty-graphic" aria-hidden="true">🤖</div>
+        <h3 class="empty-title">Multi-Agent News Intelligence Engine</h3>
+        <p class="empty-desc">
+          Enter a topic query above to initiate real-time article ingestion, concurrent LLM agent evaluation,
+          and explainable composite scoring.
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-box">
+            <div class="feature-box-title">🎯 Semantic Relevance</div>
+            <div class="feature-box-text">Evaluates domain alignment and core conceptual overlap using LangChain & Google Gemini.</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-title">🛡️ Journalistic Signals</div>
+            <div class="feature-box-text">Analyzes observable attribution, citations, and specific claims without claiming absolute truth.</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-title">🎭 Sentiment Isolation</div>
+            <div class="feature-box-text">Evaluates editorial polarity and tone independently so sentiment never distorts rank.</div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-title">🏆 Transparent Ranking</div>
+            <div class="feature-box-text">Combines weighted normalized indicators with a human-readable synthesized explanation.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Loading State (Hidden by default) -->
+      <section id="loading-state" class="loading-box" style="display: none;">
+        <div class="agent-spinner" aria-hidden="true"></div>
+        <h3 class="loading-heading">Orchestrating Multi-Agent Evaluation</h3>
+        <p id="loading-status-text" class="loading-status-text">Retrieving articles and initializing LLM agents...</p>
+        <div class="loading-steps-indicator">
+          <span class="loading-step-item"><span class="step-bullet"></span> Ingesting NewsAPI data</span>
+          <span class="loading-step-item"><span class="step-bullet"></span> Normalizing & deduplicating</span>
+          <span class="loading-step-item"><span class="step-bullet"></span> Scoring multi-agent criteria</span>
+          <span class="loading-step-item"><span class="step-bullet"></span> Synthesizing final ranks</span>
+        </div>
+
+        <div class="skeleton-cards-container" style="margin-top: 1.5rem;">
+          <div class="skeleton-card">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line meta"></div>
+            <div class="skeleton-line desc"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line meta"></div>
+            <div class="skeleton-line desc"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Error State (Hidden by default) -->
+      <div id="error-state" class="error-banner" style="display: none;" role="alert">
+        <span class="error-icon" aria-hidden="true">⚠️</span>
+        <div class="error-content">
+          <h3 id="error-title">Evaluation Error</h3>
+          <p id="error-message">An error occurred while processing your request.</p>
+          <div id="error-advice" class="error-advice"></div>
+          <button id="btn-error-retry" class="btn-retry">Retry Search</button>
+        </div>
+      </div>
+
+      <!-- Zero Results State (Hidden by default) -->
+      <section id="empty-results-state" class="empty-initial-card" style="display: none;">
+        <div class="empty-graphic" aria-hidden="true">🔍</div>
+        <h3 class="empty-title">No Articles Found</h3>
+        <p id="empty-query-message" class="empty-desc">
+          No matching articles could be retrieved or deduplicated for your search.
+        </p>
+        <p class="empty-desc" style="font-size: 0.85rem; color: var(--text-dim);">
+          Try searching for broader keywords, checking for typos, or selecting one of the suggested topics above.
+        </p>
+      </section>
+    </div>
+
+    <!-- Ranked Results Section (Hidden until results are loaded) -->
+    <section id="results-section" class="results-section" style="display: none;" aria-label="Ranked news search results">
+      <div class="results-header-bar">
+        <div class="results-count" id="results-count-text">
+          Showing ranked articles
+        </div>
+        <div class="results-meta-pill" id="results-meta-pill">
+          Ordered by Composite Score (Descending)
+        </div>
+      </div>
+
+      <div id="articles-container" class="articles-list">
+        <!-- Ranked article cards injected via app.js -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Configuration Modal -->
+  <div id="config-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">API Endpoint Configuration</h3>
+        <button id="btn-close-modal" class="btn-icon" aria-label="Close configuration modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-input-group">
+          <label for="input-api-url">Backend Base URL</label>
+          <input
+            type="url"
+            id="input-api-url"
+            class="modal-input"
+            placeholder="http://127.0.0.1:8000"
+            value="http://127.0.0.1:8000"
+          >
+          <span style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.25rem; display: block;">
+            Points to the FastAPI server host. Defaults to <code>http://127.0.0.1:8000</code>.
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-reset-api-url" class="btn-secondary">Reset to Default</button>
+        <button id="btn-save-api-url" class="btn-primary">Save & Reconnect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>
+        <strong>Intelligent News Ranking System Using LLM Agents</strong> &bull;
+        Final-Year Computer Science Project Demonstration
+      </p>
+      <p class="footer-disclaimer">
+        Disclaimer: Credibility analysis evaluates observable journalistic signals, structure, citations, and metadata.
+        It does not verify factual truth or guarantee absolute correctness.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
